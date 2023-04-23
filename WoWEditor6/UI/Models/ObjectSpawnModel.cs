@@ -12,7 +12,7 @@ namespace WoWEditor6.UI.Models
 
         public ObjectSpawnModel()
         {
-            EditorWindowController.Instance.SpawnModel = this;
+            EditorWindowController.GetInstance().SpawnModel = this;
         }
     }
 }

@@ -7,11 +7,11 @@
              xmlns:viewModels="clr-namespace:WoWEditor6.UI.ViewModels"
              xmlns:views="clr-namespace:WoWEditor6.UI.Widgets"
              xmlns:prism="http://www.codeplex.com/prism"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:i1="clr-namespace:WoWEditor6.Settings" xmlns:i2="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              mc:Ignorable="d" 
              d:DesignHeight="325" d:DesignWidth="360">
 
-    <i:Interaction.Triggers>
+    <i1:Interaction.Triggers>
         <prism:InteractionRequestTrigger SourceObject="{Binding NotificationRequest, Mode=OneWay}">
             <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True"/>
         </prism:InteractionRequestTrigger>
@@ -23,7 +23,7 @@
                 </prism:PopupWindowAction.WindowContent>
             </prism:PopupWindowAction>
         </prism:InteractionRequestTrigger>
-    </i:Interaction.Triggers>
+    </i1:Interaction.Triggers>
     
     <Grid>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="10,0">
@@ -40,11 +40,11 @@
         </StackPanel>
         
         <ListBox HorizontalAlignment="Left" Height="259" Margin="10,10,0,0" VerticalAlignment="Top" Width="125" ItemsSource="{Binding ConnectionsModel.Connections}" SelectedItem="{Binding ConnectionsModel.SelectedItem}">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
+            <i1:Interaction.Triggers>
+                <i2:EventTrigger EventName="SelectionChanged">
+                    <prism:InvokeCommandAction Command="{Binding SelectionChangedCommand}"/>
+                </i2:EventTrigger>
+            </i1:Interaction.Triggers>
         </ListBox>
         
         <Button Content="Delete" HorizontalAlignment="Left" Margin="10,274,0,0" VerticalAlignment="Top" Width="42" Command="{Binding DeleteConnectionCommand}" IsEnabled="{Binding ConnectionsModel.DeleteIsEnabled}"/>

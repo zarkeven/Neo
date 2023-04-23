@@ -193,13 +193,13 @@ namespace WoWEditor6.Editing
             {
                 if (mIsTablet_PChange)
                 {
-                    if (EditorWindowController.Instance.TexturingModel != null)
+                    if (EditorWindowController.GetInstance().TexturingModel != null)
                     {
                         mAmount = TabletManager.Instance.TabletPressure * mPenSensivity / 10.0f;
                         HandleAmountChanged(mAmount);
                     }
 
-                    if (EditorWindowController.Instance.TerrainManager != null)
+                    if (EditorWindowController.GetInstance().TerrainManager != null)
                     {
                         mIntensity = TabletManager.Instance.TabletPressure * mPenSensivity / 10.0f;
                         HandleIntensityChanged(mIntensity);
@@ -208,7 +208,7 @@ namespace WoWEditor6.Editing
 
                 if (mIsTablet_RChange) // If outer radius change is enabled.
                 {
-                    if (EditorWindowController.Instance.TexturingModel != null)
+                    if (EditorWindowController.GetInstance().TexturingModel != null)
                     {
                         
                         mOuterRadius = Math.Max( TabletManager.Instance.TabletPressure * (mAmplitude / 10.0f), 0.1f );
@@ -226,7 +226,7 @@ namespace WoWEditor6.Editing
 
                 if (mIsTablet_IRChange) // If inner radius change is enabled.
                 {
-                    if (EditorWindowController.Instance.TexturingModel != null)
+                    if (EditorWindowController.GetInstance().TexturingModel != null)
                     {
                         mInnerRadius = Math.Max( TabletManager.Instance.TabletPressure * (mInnerAmplitude / 10.0f), 0.1f);
 
@@ -286,7 +286,7 @@ namespace WoWEditor6.Editing
                     mIntensity += amount;
                     mAmount += amount;
 
-                    if (EditorWindowController.Instance.TerrainManager != null)
+                    if (EditorWindowController.GetInstance().TerrainManager != null)
                     {
 
                         mIntensity = Math.Max(mIntensity, 1.0f);
@@ -295,7 +295,7 @@ namespace WoWEditor6.Editing
                         HandleIntensityChanged(mIntensity);
                     }
 
-                    if (EditorWindowController.Instance.TexturingModel != null)
+                    if (EditorWindowController.GetInstance().TexturingModel != null)
                     {
                         mAmount = Math.Max(mAmount, 1.0f);
                         mAmount = Math.Min(mAmount, 40.0f);
@@ -309,7 +309,7 @@ namespace WoWEditor6.Editing
                 {
                     mOpacity += amount;
 
-                    if (EditorWindowController.Instance.TexturingModel != null)
+                    if (EditorWindowController.GetInstance().TexturingModel != null)
                     {
 
                         mOpacity = Math.Max(mOpacity, 0.0f);
@@ -323,7 +323,7 @@ namespace WoWEditor6.Editing
                 {
                     mPenSensivity += amount / 32.0f;
 
-                    if(EditorWindowController.Instance.TexturingModel != null)
+                    if(EditorWindowController.GetInstance().TexturingModel != null)
                     {
                         mPenSensivity = Math.Max(mPenSensivity, 0.1f);
                         mPenSensivity = Math.Min(mPenSensivity, 1.0f);
@@ -400,143 +400,143 @@ namespace WoWEditor6.Editing
         {
             mInnerRadius = value;
             WorldFrame.Instance.UpdateBrush(mInnerRadius, mOuterRadius);
-            if (EditorWindowController.Instance.TexturingModel != null)
-                EditorWindowController.Instance.TexturingModel.HandleInnerRadiusChanged(value);
+            if (EditorWindowController.GetInstance().TexturingModel != null)
+                EditorWindowController.GetInstance().TexturingModel.HandleInnerRadiusChanged(value);
 
-            if (EditorWindowController.Instance.TerrainManager != null)
-                EditorWindowController.Instance.TerrainManager.HandleInnerRadiusChanged(value);
+            if (EditorWindowController.GetInstance().TerrainManager != null)
+                EditorWindowController.GetInstance().TerrainManager.HandleInnerRadiusChanged(value);
 
-            if (EditorWindowController.Instance.ShadingModel != null)
-                EditorWindowController.Instance.ShadingModel.HandleInnerRadiusChanged(value);
+            if (EditorWindowController.GetInstance().ShadingModel != null)
+                EditorWindowController.GetInstance().ShadingModel.HandleInnerRadiusChanged(value);
         }
 
         private void HandleOuterRadiusChanged(float value)
         {
             mOuterRadius = value;
             WorldFrame.Instance.UpdateBrush(mInnerRadius, mOuterRadius);
-            if (EditorWindowController.Instance.TexturingModel != null)
-                EditorWindowController.Instance.TexturingModel.HandleOuterRadiusChanged(value);
+            if (EditorWindowController.GetInstance().TexturingModel != null)
+                EditorWindowController.GetInstance().TexturingModel.HandleOuterRadiusChanged(value);
 
-            if (EditorWindowController.Instance.TerrainManager != null)
-                EditorWindowController.Instance.TerrainManager.HandleOuterRadiusChanged(value);
+            if (EditorWindowController.GetInstance().TerrainManager != null)
+                EditorWindowController.GetInstance().TerrainManager.HandleOuterRadiusChanged(value);
 
-            if (EditorWindowController.Instance.ShadingModel != null)
-                EditorWindowController.Instance.ShadingModel.HandleOuterRadiusChanged(value);
+            if (EditorWindowController.GetInstance().ShadingModel != null)
+                EditorWindowController.GetInstance().ShadingModel.HandleOuterRadiusChanged(value);
         }
 
         private void HandleIntensityChanged(float value)
         {
             mIntensity = value;
-            if (EditorWindowController.Instance.TerrainManager != null)
-                EditorWindowController.Instance.TerrainManager.HandleIntensityChanged(value);
+            if (EditorWindowController.GetInstance().TerrainManager != null)
+                EditorWindowController.GetInstance().TerrainManager.HandleIntensityChanged(value);
 
-            if (EditorWindowController.Instance.ShadingModel != null)
-                EditorWindowController.Instance.ShadingModel.HandleIntensityChanged(value);
+            if (EditorWindowController.GetInstance().ShadingModel != null)
+                EditorWindowController.GetInstance().ShadingModel.HandleIntensityChanged(value);
 
         }
 
         private void HandleAmountChanged(float value)
         {
             mAmount = value;
-            if (EditorWindowController.Instance.TexturingModel != null)
-                EditorWindowController.Instance.TexturingModel.HandleAmoutChanged(value);
+            if (EditorWindowController.GetInstance().TexturingModel != null)
+                EditorWindowController.GetInstance().TexturingModel.HandleAmoutChanged(value);
         }
 
         private void HandleOpacityChanged(float value)
         {
             mOpacity = value;
-            if (EditorWindowController.Instance.TexturingModel != null)
-                EditorWindowController.Instance.TexturingModel.HandleOpacityChanged(value);
+            if (EditorWindowController.GetInstance().TexturingModel != null)
+                EditorWindowController.GetInstance().TexturingModel.HandleOpacityChanged(value);
         }
 
         private void HandlePenSensivityChanged(float value)
         {
             mPenSensivity = value;
-            if (EditorWindowController.Instance.TexturingModel != null)
-                EditorWindowController.Instance.TexturingModel.HandlePenSensivityChanged(value);
-            if (EditorWindowController.Instance.TerrainManager != null)
-                EditorWindowController.Instance.TerrainManager.HandlePenSensivityChanged(value);
+            if (EditorWindowController.GetInstance().TexturingModel != null)
+                EditorWindowController.GetInstance().TexturingModel.HandlePenSensivityChanged(value);
+            if (EditorWindowController.GetInstance().TerrainManager != null)
+                EditorWindowController.GetInstance().TerrainManager.HandlePenSensivityChanged(value);
         }
 
         private void HandleTabletControlChanged(bool value)
         {
             mIsTabletOn = value;
-            if (EditorWindowController.Instance.TexturingModel != null)
-                EditorWindowController.Instance.TexturingModel.HandleTabletControlChanged(value);
-            if (EditorWindowController.Instance.TerrainManager != null)
-                EditorWindowController.Instance.TerrainManager.HandleTabletControlChanged(value);
-            if (EditorWindowController.Instance.ShadingModel != null)
-                EditorWindowController.Instance.ShadingModel.HandleTabletControlChanged(value);
+            if (EditorWindowController.GetInstance().TexturingModel != null)
+                EditorWindowController.GetInstance().TexturingModel.HandleTabletControlChanged(value);
+            if (EditorWindowController.GetInstance().TerrainManager != null)
+                EditorWindowController.GetInstance().TerrainManager.HandleTabletControlChanged(value);
+            if (EditorWindowController.GetInstance().ShadingModel != null)
+                EditorWindowController.GetInstance().ShadingModel.HandleTabletControlChanged(value);
         }
 
         private void HandleTabletRadiusChanged(bool value)
         {
             mIsTablet_RChange = value;
-            if (EditorWindowController.Instance.TexturingModel != null)
-                EditorWindowController.Instance.TexturingModel.HandleTabletChangeRadiusChanged(value);
+            if (EditorWindowController.GetInstance().TexturingModel != null)
+                EditorWindowController.GetInstance().TexturingModel.HandleTabletChangeRadiusChanged(value);
         }
 
         private void HandleTabletInnerRadiusChanged(bool value)
         {
             mIsTablet_IRChange = value;
-            if (EditorWindowController.Instance.TexturingModel != null)
-                EditorWindowController.Instance.TexturingModel.HandleTabletChangeInnerRadiusChanged(value);
+            if (EditorWindowController.GetInstance().TexturingModel != null)
+                EditorWindowController.GetInstance().TexturingModel.HandleTabletChangeInnerRadiusChanged(value);
         }
 
         private void HandleAllowedAmplitudeChanged(float value)
         {
             mAmplitude = value;
-            if (EditorWindowController.Instance.TexturingModel != null)
-                EditorWindowController.Instance.TexturingModel.HandleAllowedAmplitudeChanged(value);
+            if (EditorWindowController.GetInstance().TexturingModel != null)
+                EditorWindowController.GetInstance().TexturingModel.HandleAllowedAmplitudeChanged(value);
         }
 
         private void HandleAllowedInnerAmplitudeChanged(float value)
         {
             mInnerAmplitude = value;
-            if (EditorWindowController.Instance.TexturingModel != null)
-                EditorWindowController.Instance.TexturingModel.HandleAllowedInnerAmplitudeChanged(value);
+            if (EditorWindowController.GetInstance().TexturingModel != null)
+                EditorWindowController.GetInstance().TexturingModel.HandleAllowedInnerAmplitudeChanged(value);
         }
 
         private void HandleTabletControlPressureChanged(bool value)
         {
             mIsTablet_PChange = value;
-            if (EditorWindowController.Instance.TexturingModel != null)
-                EditorWindowController.Instance.TexturingModel.HandleTabletControlPressureChanged(value);
+            if (EditorWindowController.GetInstance().TexturingModel != null)
+                EditorWindowController.GetInstance().TexturingModel.HandleTabletControlPressureChanged(value);
         }
 
         private void HandleSprayModeChanged(bool value)
         {
             mIsSprayOn = value;
-            if (EditorWindowController.Instance.TexturingModel != null)
-                EditorWindowController.Instance.TexturingModel.HandleSprayModeChanged(value);
+            if (EditorWindowController.GetInstance().TexturingModel != null)
+                EditorWindowController.GetInstance().TexturingModel.HandleSprayModeChanged(value);
         }
 
         private void HandleParticleSizeChanged(float value)
         {
             mSprayParticleSize = value;
-            if (EditorWindowController.Instance.TexturingModel != null)
-                EditorWindowController.Instance.TexturingModel.HandleParticleSizeChanged(value);
+            if (EditorWindowController.GetInstance().TexturingModel != null)
+                EditorWindowController.GetInstance().TexturingModel.HandleParticleSizeChanged(value);
         }
 
         private void HandleParticleAmountChanged(float value)
         {
             mSprayParticleAmount = value;
-            if (EditorWindowController.Instance.TexturingModel != null)
-                EditorWindowController.Instance.TexturingModel.HandleParticleAmountChanged(value);
+            if (EditorWindowController.GetInstance().TexturingModel != null)
+                EditorWindowController.GetInstance().TexturingModel.HandleParticleAmountChanged(value);
         }
 
         private void HandleParticleHardnessChanged(float value)
         {
             mSprayParticleHardness = value;
-            if (EditorWindowController.Instance.TexturingModel != null)
-                EditorWindowController.Instance.TexturingModel.HandleParticleHardnessChanged(value);
+            if (EditorWindowController.GetInstance().TexturingModel != null)
+                EditorWindowController.GetInstance().TexturingModel.HandleParticleHardnessChanged(value);
         }
 
         private void HandleSpraySolidInnerRadiusChanged(bool value)
         {
             mIsSpraySolidInnerRadius = value;
-            if (EditorWindowController.Instance.TexturingModel != null)
-                EditorWindowController.Instance.TexturingModel.HandleSpraySolidInnerRadiusChanged(value);
+            if (EditorWindowController.GetInstance().TexturingModel != null)
+                EditorWindowController.GetInstance().TexturingModel.HandleSpraySolidInnerRadiusChanged(value);
         }
     }
 }

@@ -29,12 +29,17 @@ namespace WoWEditor6.UI.Models
         private readonly List<string> mFavoriteTextures = new List<string>(); 
         private readonly List<string> mTilesets = new List<string>(); 
 
-        public TexturingWidget Widget { get { return mWidget; } }
+        public TexturingWidget Widget { get { return NewMethod(); } }
+
+        private TexturingWidget NewMethod()
+        {
+            return mWidget;
+        }
 
         public TexturingViewModel(TexturingWidget widget)
         {
-            if (EditorWindowController.Instance != null)
-                EditorWindowController.Instance.TexturingModel = this;
+            if (EditorWindowController.GetInstance() != null)
+                EditorWindowController.GetInstance().TexturingModel = this;
 
             mWidget = widget;
             if (WorldFrame.Instance != null)
@@ -74,7 +79,8 @@ namespace WoWEditor6.UI.Models
                 panel.Controls.Add(pnl);
 
                 var texName = tex;
-                loadTasks.Add(new Tuple<string, PictureBox>(texName, pb));
+                Tuple<string, PictureBox> tuple = new Tuple<string, PictureBox>(texName, pb);
+                loadTasks.Add(tuple);
             }
 
             new Thread(async () =>
@@ -84,7 +90,7 @@ namespace WoWEditor6.UI.Models
                     var img = pair.Item2;
                     var bmp = await CreateBitmap(pair.Item1);
 
-                    await EditorWindowController.Instance.WindowDispatcher.BeginInvoke(new Action(() =>
+                    await EditorWindowController.GetInstance().WindowDispatcher.BeginInvoke(new Action(() =>
                     {
                         img.Image = bmp;
                         img.CreateControl();
@@ -95,7 +101,7 @@ namespace WoWEditor6.UI.Models
 
         public void HandleSelectFromAssets()
         {
-            EditorWindowController.Instance.ShowAssetBrowser();
+            EditorWindowController.GetInstance().ShowAssetBrowser();
         }
 
         public void HandleAmountSlider(float value)
@@ -341,7 +347,7 @@ namespace WoWEditor6.UI.Models
 
             mWidget.SearchResultLayout.Controls.Clear();
             var newValues =
-                mTilesets.Where(s => s.Contains(query) && (selectedFilters.Count == 0 || selectedFilters.Any(s.Contains)));
+                mTilesets.Where(s => !(!s.Contains(query) || selectedFilters.Count != 0 && !selectedFilters.Any(s.Contains)));
 
             var toAdd = new List<Control>();
             foreach (var tex in newValues)
@@ -383,7 +389,7 @@ namespace WoWEditor6.UI.Models
             mWidget.SearchResultLayout.Controls.Clear();
             query = query.ToLowerInvariant();
             var newValues =
-                mTilesets.Where(s => s.Contains(query) && (selectedFilters.Count == 0 || selectedFilters.Any(s.Contains)));
+                mTilesets.Where(s => !(!s.Contains(query) || selectedFilters.Count != 0 && !selectedFilters.Any(s.Contains)));
 
             var toAdd = new List<Control>();
             foreach (var tex in newValues)
@@ -453,7 +459,7 @@ namespace WoWEditor6.UI.Models
             }
             else
             {
-                mWidget.FavoriteWrapPanel.Controls.RemoveAt(index);
+                mWidget.FavoriteWrapPanel.Controls.RemoveAt((int)index);
                 mFavoriteTextures.RemoveAt(index);
                 mWidget.FavoriteButton.Content = "Add Favorite";
             }
@@ -487,15 +493,7 @@ namespace WoWEditor6.UI.Models
         private async void AddRecentTexture(string texture, bool initial = false)
         {
             texture = texture.ToLowerInvariant();
-            if (mRecentTextures.Contains(texture))
-            {
-                var index = mRecentTextures.IndexOf(texture);
-                mRecentTextures.RemoveAt(index);
-                mRecentTextures.Add(texture);
-                var elem = mWidget.RecentWrapPanel.Controls[index];
-                mWidget.RecentWrapPanel.Controls.SetChildIndex(elem, 0);
-            }
-            else
+            if (!mRecentTextures.Contains(texture))
             {
                 var pnl = new Panel
                 {
@@ -524,6 +522,14 @@ namespace WoWEditor6.UI.Models
                 mRecentTextures.Insert(0, texture);
                 mWidget.RecentWrapPanel.Controls.Add(pnl);
                 mWidget.RecentWrapPanel.Controls.SetChildIndex(pnl, 0);
+            }
+            else
+            {
+                var index = mRecentTextures.IndexOf(texture);
+                mRecentTextures.RemoveAt(index);
+                mRecentTextures.Add(texture);
+                var elem = mWidget.RecentWrapPanel.Controls[index];
+                mWidget.RecentWrapPanel.Controls.SetChildIndex(elem, 0);
             }
 
             if (initial == false)
@@ -665,7 +671,7 @@ namespace WoWEditor6.UI.Models
             AddRecentTexture(texName);
 
             var nameLow = texName.ToLowerInvariant();
-            mWidget.FavoriteButton.Content = mFavoriteTextures.Contains(nameLow) ? "Remove Favorite" : "Add Favorite";
+            mWidget.FavoriteButton.Content = !mFavoriteTextures.Contains(nameLow) ? "Add Favorite" : "Remove Favorite";
             mWidget.FavoriteButton.IsEnabled = true;
         }
 

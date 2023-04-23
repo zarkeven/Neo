@@ -113,11 +113,11 @@ namespace WoWEditor6.Scene.Terrain
 
                 if (WorldFrame.Instance.LastMouseIntersection.ChunkHit != null)
                 {
-                    EditorWindowController.Instance.OnUpdateChunkIndex(WorldFrame.Instance.LastMouseIntersection.ChunkHit.IndexX, WorldFrame.Instance.LastMouseIntersection.ChunkHit.IndexY);
+                    EditorWindowController.GetInstance().OnUpdateChunkIndex(WorldFrame.Instance.LastMouseIntersection.ChunkHit.IndexX, WorldFrame.Instance.LastMouseIntersection.ChunkHit.IndexY);
                 }
                 else
                 {
-                    EditorWindowController.Instance.OnUpdateChunkIndex(0, 0);
+                    EditorWindowController.GetInstance().OnUpdateChunkIndex(0, 0);
                 }
                 
                 foreach (var pair in mAreas)
@@ -158,7 +158,7 @@ namespace WoWEditor6.Scene.Terrain
             Interlocked.Increment(ref mLoadStepsDone);
             var pct = (float) mLoadStepsDone / mTotalLoadSteps;
             if (IsInitialLoad)
-                EditorWindowController.Instance.LoadingScreen.UpdateProgress(pct);
+                EditorWindowController.GetInstance().LoadingScreen.UpdateProgress(pct);
 
             if (mLoadStepsDone < mTotalLoadSteps || !IsInitialLoad) return;
 
@@ -179,7 +179,7 @@ namespace WoWEditor6.Scene.Terrain
                 UpdateVisibility(ref position);
             }
 
-            EditorWindowController.Instance.OnUpdatePosition(position);
+            EditorWindowController.GetInstance().OnUpdatePosition(position);
 
             var x = position.X;
             var y = position.Y;
@@ -190,7 +190,7 @@ namespace WoWEditor6.Scene.Terrain
             var tilex = (int)Math.Floor(x / Metrics.TileSize);
             var tiley = (int)Math.Floor(y / Metrics.TileSize);
 
-            EditorWindowController.Instance.OnUpdateTileIndex(tilex, tiley);
+            EditorWindowController.GetInstance().OnUpdateTileIndex(tilex, tiley);
 
         }
 
@@ -322,7 +322,7 @@ namespace WoWEditor6.Scene.Terrain
                     entryPoint.Y = 64.0f * Metrics.TileSize - mEntryPoint.Y;
 
                 SkyManager.Instance.AsyncUpdate();
-                EditorWindowController.Instance.OnEnterWorld();
+                EditorWindowController.GetInstance().OnEnterWorld();
                 WorldFrame.Instance.OnEnterWorld(entryPoint);
                 WorldFrame.Instance.Dispatcher.BeginInvoke(
                     () =>

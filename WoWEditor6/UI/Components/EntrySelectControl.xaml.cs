@@ -220,7 +220,7 @@ namespace WoWEditor6.UI.Components
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            EditorWindowController.Instance.ShowMapOverview();
+            EditorWindowController.GetInstance().ShowMapOverview();
         }
     }
 }

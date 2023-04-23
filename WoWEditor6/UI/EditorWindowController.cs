@@ -1,15 +1,22 @@
-﻿using System.Windows;
+﻿using SharpDX;
+using System.Windows;
 using System.Windows.Threading;
-using SharpDX;
 using WoWEditor6.UI.Components;
 using WoWEditor6.UI.Models;
-using WoWEditor6.Editing;
 
 namespace WoWEditor6.UI
 {
-    class EditorWindowController
+    internal class EditorWindowController
     {
-        public static EditorWindowController Instance { get; private set; }
+        public static EditorWindowController GetInstance()
+        {
+            return Instance;
+        }
+
+        private static void SetInstance(EditorWindowController value)
+        {
+            Instance = value;
+        }
 
         private readonly EditorWindow mWindow;
 
@@ -23,10 +30,22 @@ namespace WoWEditor6.UI
 
         public Dispatcher WindowDispatcher { get { return mWindow.Dispatcher; } }
 
+        internal static EditorWindowController Instance { get; set; }
+
         public EditorWindowController(EditorWindow window)
         {
-            Instance = this;
+            SetInstance(this);
             mWindow = window;
+        }
+
+        public EditorWindowController(EditorWindow mWindow, TexturingViewModel texturingModel, SculptingViewModel terrainManager, IEditingViewModel iEditingModel, ShadingViewModel shadingModel, AssetBrowserViewModel assetBrowserModel, ObjectSpawnModel spawnModel) : this(mWindow)
+        {
+            TexturingModel = texturingModel;
+            TerrainManager = terrainManager;
+            IEditingModel = iEditingModel;
+            ShadingModel = shadingModel;
+            AssetBrowserModel = assetBrowserModel;
+            SpawnModel = spawnModel;
         }
 
         public void ShowMapOverview()

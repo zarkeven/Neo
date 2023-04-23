@@ -16,8 +16,8 @@ namespace WoWEditor6.UI.Models
 
         public ShadingViewModel(ShadingWidget widget)
         {
-            if (EditorWindowController.Instance != null)
-                EditorWindowController.Instance.ShadingModel = this;
+            if (EditorWindowController.GetInstance() != null)
+                EditorWindowController.GetInstance().ShadingModel = this;
 
             mWidget = widget;
         }

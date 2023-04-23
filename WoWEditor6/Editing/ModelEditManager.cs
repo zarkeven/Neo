@@ -33,14 +33,14 @@ namespace WoWEditor6.Editing
                 mLastCursorPosition = Cursor.Position;
                 mLastPos = EditManager.Instance.MousePosition;
 
-                EditorWindowController.Instance.OnUpdate(Vector3.Zero, Vector3.Zero);
+                EditorWindowController.GetInstance().OnUpdate(Vector3.Zero, Vector3.Zero);
                 return;
             }
 
             var curPos = Cursor.Position;
             var dpos = new Point(curPos.X - mLastCursorPosition.X, curPos.Y - mLastCursorPosition.Y);
 
-            EditorWindowController.Instance.OnUpdate(SelectedModel.GetPosition(),SelectedModel.GetNamePlatePosition());
+            EditorWindowController.GetInstance().OnUpdate(SelectedModel.GetPosition(),SelectedModel.GetNamePlatePosition());
 
             var keyState = new byte[256];
             UnsafeNativeMethods.GetKeyboardState(keyState);

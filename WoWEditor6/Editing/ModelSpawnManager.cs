@@ -155,7 +155,7 @@ namespace WoWEditor6.Editing
 
             SpawnModel(parameters.TerrainPosition);
 
-            ModelEditManager.Instance.IsCopying = !EditorWindowController.Instance.SpawnModel.DeselectModelOnClick;
+            ModelEditManager.Instance.IsCopying = !EditorWindowController.GetInstance().SpawnModel.DeselectModelOnClick;
 
             if (!ModelEditManager.Instance.IsCopying)
             {

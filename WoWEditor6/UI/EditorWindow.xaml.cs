@@ -147,14 +147,14 @@ namespace WoWEditor6.UI
             EventHandler method = null;
             method = (s, args) =>
             {
-                EditorWindowController.Instance.TexturingModel.Widget.SelectedTileWrapPanel.HandleCreated -= method;
+                EditorWindowController.GetInstance().TexturingModel.Widget.SelectedTileWrapPanel.HandleCreated -= method;
                 //Dispatcher.BeginInvoke(new Action(() => TexturingPane.ToggleAutoHide()));
             };
-            EditorWindowController.Instance.TexturingModel.Widget.SelectedTileWrapPanel.HandleCreated += method;
+            EditorWindowController.GetInstance().TexturingModel.Widget.SelectedTileWrapPanel.HandleCreated += method;
 
-            if (EditorWindowController.Instance.IEditingModel != null)
+            if (EditorWindowController.GetInstance().IEditingModel != null)
             {
-                EditorWindowController.Instance.IEditingModel.SwitchWidgets(0);
+                EditorWindowController.GetInstance().IEditingModel.SwitchWidgets(0);
                 IEditingPane.Hide();
             }
 
@@ -544,8 +544,8 @@ namespace WoWEditor6.UI
                 IEditingPane.Dock();
             }
 
-            if (EditorWindowController.Instance.IEditingModel != null)
-                EditorWindowController.Instance.IEditingModel.SwitchWidgets(1);
+            if (EditorWindowController.GetInstance().IEditingModel != null)
+                EditorWindowController.GetInstance().IEditingModel.SwitchWidgets(1);
 
         }
 
@@ -556,8 +556,8 @@ namespace WoWEditor6.UI
                 IEditingPane.Dock();
             }
 
-            if (EditorWindowController.Instance.IEditingModel != null)
-                EditorWindowController.Instance.IEditingModel.SwitchWidgets(3);
+            if (EditorWindowController.GetInstance().IEditingModel != null)
+                EditorWindowController.GetInstance().IEditingModel.SwitchWidgets(3);
 
         }
 
@@ -568,8 +568,8 @@ namespace WoWEditor6.UI
                 IEditingPane.Dock();
             }
 
-            if (EditorWindowController.Instance.IEditingModel != null)
-                EditorWindowController.Instance.IEditingModel.SwitchWidgets(4);
+            if (EditorWindowController.GetInstance().IEditingModel != null)
+                EditorWindowController.GetInstance().IEditingModel.SwitchWidgets(4);
         }
 
         private void ModelSpawningClick(object sender, RoutedEventArgs e)
@@ -579,8 +579,8 @@ namespace WoWEditor6.UI
                 IEditingPane.Dock();
             }
 
-            if (EditorWindowController.Instance.IEditingModel != null)
-                EditorWindowController.Instance.IEditingModel.SwitchWidgets(5);
+            if (EditorWindowController.GetInstance().IEditingModel != null)
+                EditorWindowController.GetInstance().IEditingModel.SwitchWidgets(5);
         }
 
         private void ChunkEditingClick(object sender, RoutedEventArgs e)
@@ -590,8 +590,8 @@ namespace WoWEditor6.UI
                 IEditingPane.Dock();
             }
 
-            if (EditorWindowController.Instance.IEditingModel != null)
-                EditorWindowController.Instance.IEditingModel.SwitchWidgets(6);
+            if (EditorWindowController.GetInstance().IEditingModel != null)
+                EditorWindowController.GetInstance().IEditingModel.SwitchWidgets(6);
         }
 
         private void AssetBrowserDocument_IsActiveChanged(object sender, EventArgs e)

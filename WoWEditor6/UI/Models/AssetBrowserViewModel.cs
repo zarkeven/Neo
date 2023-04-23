@@ -46,7 +46,7 @@ namespace WoWEditor6.UI.Models
             browser.Loaded += OnInitialized;
             FileManager.Instance.LoadComplete += OnFilesLoaded;
             mRootDiretory = new AssetBrowserDirectory(this, new DirectoryEntry {Name = ""}, null);
-            EditorWindowController.Instance.AssetBrowserModel = this;
+            EditorWindowController.GetInstance().AssetBrowserModel = this;
 
             if (ThumbnailCache.ThumnailAdded == null)
                 ThumbnailCache.ThumnailAdded += UpdateThumbnail;

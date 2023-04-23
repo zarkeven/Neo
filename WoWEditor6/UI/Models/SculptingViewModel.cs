@@ -13,8 +13,8 @@ namespace WoWEditor6.UI.Models
 
         public SculptingViewModel(TerrainSettingsWidget widget)
         {
-            if (EditorWindowController.Instance != null)
-                EditorWindowController.Instance.TerrainManager = this;
+            if (EditorWindowController.GetInstance() != null)
+                EditorWindowController.GetInstance().TerrainManager = this;
 
             mWidget = widget;
         }

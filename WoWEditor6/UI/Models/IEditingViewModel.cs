@@ -16,8 +16,8 @@ namespace WoWEditor6.UI.Models
 
         public IEditingViewModel(IEditingWidget widget)
         {
-            if (EditorWindowController.Instance != null)
-                EditorWindowController.Instance.IEditingModel = this;
+            if (EditorWindowController.GetInstance() != null)
+                EditorWindowController.GetInstance().IEditingModel = this;
 
             mWidget = widget;
         }
