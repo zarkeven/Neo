@@ -389,7 +389,7 @@ namespace WoWEditor6.UI.Models
             mWidget.SearchResultLayout.Controls.Clear();
             query = query.ToLowerInvariant();
             var newValues =
-                mTilesets.Where(s => !(!s.Contains(query) || selectedFilters.Count != 0 && !selectedFilters.Any(s.Contains)));
+                mTilesets.Where(s => s.Contains(query) && (selectedFilters.Count == 0 || selectedFilters.Any(s.Contains)));
 
             var toAdd = new List<Control>();
             foreach (var tex in newValues)
@@ -493,7 +493,15 @@ namespace WoWEditor6.UI.Models
         private async void AddRecentTexture(string texture, bool initial = false)
         {
             texture = texture.ToLowerInvariant();
-            if (!mRecentTextures.Contains(texture))
+            if (mRecentTextures.Contains(texture))
+            {
+                var index = mRecentTextures.IndexOf(texture);
+                mRecentTextures.RemoveAt(index);
+                mRecentTextures.Add(texture);
+                var elem = mWidget.RecentWrapPanel.Controls[index];
+                mWidget.RecentWrapPanel.Controls.SetChildIndex(elem, 0);
+            }
+            else
             {
                 var pnl = new Panel
                 {
@@ -523,14 +531,6 @@ namespace WoWEditor6.UI.Models
                 mWidget.RecentWrapPanel.Controls.Add(pnl);
                 mWidget.RecentWrapPanel.Controls.SetChildIndex(pnl, 0);
             }
-            else
-            {
-                var index = mRecentTextures.IndexOf(texture);
-                mRecentTextures.RemoveAt(index);
-                mRecentTextures.Add(texture);
-                var elem = mWidget.RecentWrapPanel.Controls[index];
-                mWidget.RecentWrapPanel.Controls.SetChildIndex(elem, 0);
-            }
 
             if (initial == false)
             {
@@ -545,35 +545,35 @@ namespace WoWEditor6.UI.Models
         {
             foreach (string tex in textures)
             {
-                if (mFavoriteTextures.Contains(tex.ToLowerInvariant()))
-                    continue;
-
-                mFavoriteTextures.Add(tex.ToLowerInvariant());
-
-                var pnl = new Panel
+                if (!mFavoriteTextures.Contains(tex.ToLowerInvariant()))
                 {
-                    Width = 100,
-                    Height = 100,
-                    Margin = new Padding(5, 5, 0, 0)
-                };
+                    mFavoriteTextures.Add(tex.ToLowerInvariant());
 
-                var pb = new PictureBox
-                {
-                    Width = 96,
-                    Height = 96,
-                    SizeMode = PictureBoxSizeMode.StretchImage,
-                    Location = new Point(2, 2),
-                    Tag = tex.ToLowerInvariant(),
-                    Image = await CreateBitmap(tex)
-                };
+                    var pnl = new Panel
+                    {
+                        Width = 100,
+                        Height = 100,
+                        Margin = new Padding(5, 5, 0, 0)
+                    };
 
-                pnl.Controls.Add(pb);
+                    var pb = new PictureBox
+                    {
+                        Width = 96,
+                        Height = 96,
+                        SizeMode = PictureBoxSizeMode.StretchImage,
+                        Location = new Point(2, 2),
+                        Tag = tex.ToLowerInvariant(),
+                        Image = await CreateBitmap(tex)
+                    };
 
-                if (pb.Image == null)
-                    pnl.Visible = false;
+                    pnl.Controls.Add(pb);
 
-                SetEventHandlers(pb);
-                mWidget.FavoriteWrapPanel.Controls.Add(pnl);
+                    if (pb.Image == null)
+                        pnl.Visible = false;
+
+                    SetEventHandlers(pb);
+                    mWidget.FavoriteWrapPanel.Controls.Add(pnl);
+                }
             }
         }
 
